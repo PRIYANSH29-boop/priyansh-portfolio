@@ -4,6 +4,8 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Sparkles } from "lucide-react";
 import { FadeIn, RevealText } from "./RevealText";
+import { RotatingSubheading } from "./RotatingSubheading";
+import { MagneticButton } from "./MagneticButton";
 
 const HeroScene = dynamic(
   () => import("./HeroScene").then((m) => m.HeroScene),
@@ -62,7 +64,11 @@ export function Hero() {
             delay={0.2}
           />
 
-          <FadeIn delay={0.9} className="mt-8 md:mt-10 max-w-xl">
+          <FadeIn delay={0.85} className="mt-7 md:mt-8 max-w-xl">
+            <RotatingSubheading />
+          </FadeIn>
+
+          <FadeIn delay={1.0} className="mt-6 md:mt-7 max-w-xl">
             <div className="flex flex-wrap items-center gap-2 text-xs md:text-[13px] font-mono text-ink-200 tracking-wide">
               <Pill>ML Systems</Pill>
               <Pill>LLM Architectures</Pill>
@@ -72,7 +78,7 @@ export function Hero() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={1.05} className="mt-8 max-w-lg">
+          <FadeIn delay={1.15} className="mt-7 max-w-lg">
             <p className="text-ink-200 text-base md:text-lg leading-relaxed text-balance">
               Production-grade ML — from{" "}
               <span className="text-white">
@@ -86,27 +92,27 @@ export function Hero() {
             </p>
           </FadeIn>
 
-          <FadeIn delay={1.25} className="mt-10 flex flex-wrap items-center gap-3">
-            <a href="#work" className="btn-primary group">
-              View Projects
+          <FadeIn delay={1.3} className="mt-10 flex flex-wrap items-center gap-3">
+            <MagneticButton href="#work" variant="primary">
+              Explore Systems
               <ArrowUpRight
                 size={16}
                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
-            </a>
-            <a href="#lab" className="btn-ghost group">
+            </MagneticButton>
+            <MagneticButton href="#lab" variant="ghost" strength={0.22}>
               Research Lab
               <span className="w-1.5 h-1.5 rounded-full bg-accent-soft group-hover:scale-125 transition-transform" />
-            </a>
+            </MagneticButton>
           </FadeIn>
 
-          <FadeIn delay={1.5} className="mt-14 md:mt-20 grid grid-cols-3 gap-x-6 gap-y-5 max-w-md">
+          <FadeIn delay={1.55} className="mt-14 md:mt-20 grid grid-cols-3 gap-x-6 gap-y-5 max-w-md">
             <Stat value="96.59%" label="mAP@0.5 · YOLO" />
             <Stat value="99.50%" label="Classifier acc." />
             <Stat value="75K+" label="Quant datapoints" />
           </FadeIn>
 
-          <FadeIn delay={1.7} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono tracking-[0.18em] uppercase text-ink-300 max-w-md">
+          <FadeIn delay={1.75} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono tracking-[0.18em] uppercase text-ink-300 max-w-md">
             <span className="inline-flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-signal-green" />
               automated retraining

@@ -58,6 +58,8 @@ const config: Config = {
         "shimmer": "shimmer 2.5s linear infinite",
         "orbit": "orbit 20s linear infinite",
         "scan": "scan 4s ease-in-out infinite",
+        "ping-slow": "pingSlow 2.6s cubic-bezier(0,0,0.2,1) infinite",
+        "draw": "draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards",
       },
       keyframes: {
         float: {
@@ -79,6 +81,14 @@ const config: Config = {
         scan: {
           "0%, 100%": { transform: "translateY(0%)" },
           "50%": { transform: "translateY(100%)" },
+        },
+        pingSlow: {
+          "0%": { transform: "scale(1)", opacity: "0.8" },
+          "75%, 100%": { transform: "scale(2.4)", opacity: "0" },
+        },
+        draw: {
+          "0%": { strokeDashoffset: "var(--dash, 1000)" },
+          "100%": { strokeDashoffset: "0" },
         },
       },
       backdropBlur: {
