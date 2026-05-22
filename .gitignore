@@ -24,3 +24,6 @@ next-env.d.ts
 *.log
 npm-debug.log*
 /coverage
+
+# claude code agent directory
+.claude
