@@ -27,3 +27,6 @@ npm-debug.log*
 
 # claude code agent directory
 .claude
+
+# session / scratch notes
+notes.md
