@@ -106,13 +106,7 @@ export function Hero() {
             </MagneticButton>
           </FadeIn>
 
-          <FadeIn delay={1.55} className="mt-14 md:mt-20 grid grid-cols-3 gap-x-6 gap-y-5 max-w-md">
-            <Stat value="96.59%" label="mAP@0.5 · YOLO" />
-            <Stat value="99.50%" label="Classifier acc." />
-            <Stat value="75K+" label="Quant datapoints" />
-          </FadeIn>
-
-          <FadeIn delay={1.75} className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono tracking-[0.18em] uppercase text-ink-300 max-w-md">
+          <FadeIn delay={1.55} className="mt-14 md:mt-20 flex flex-wrap items-center gap-x-5 gap-y-2 text-[11px] font-mono tracking-[0.18em] uppercase text-ink-300 max-w-md">
             <span className="inline-flex items-center gap-2">
               <span className="w-1 h-1 rounded-full bg-signal-green" />
               automated retraining
@@ -193,19 +187,6 @@ function Pill({ children }: { children: React.ReactNode }) {
     <span className="px-2.5 py-1 rounded-full border border-white/[0.08] bg-white/[0.02] text-ink-200 text-[10px] tracking-[0.18em] uppercase">
       {children}
     </span>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="flex flex-col">
-      <span className="font-display text-2xl md:text-3xl font-light text-white">
-        {value}
-      </span>
-      <span className="text-[10px] uppercase tracking-[0.2em] text-ink-300 mt-1">
-        {label}
-      </span>
-    </div>
   );
 }
 

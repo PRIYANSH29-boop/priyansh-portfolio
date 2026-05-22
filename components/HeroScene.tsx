@@ -323,7 +323,7 @@ function PanelFraudHeatmap() {
         })}
       </div>
       <div className="mt-2 text-[8px] text-ink-200 tracking-wider">
-        TXN 12,840 / s · AUC 0.987
+        TXN stream · model v4.2.1
       </div>
     </div>
   );
@@ -368,7 +368,7 @@ function PanelNeural() {
           )
         )}
       </svg>
-      <div className="text-[8px] text-ink-200 mt-1">loss 0.0142 · acc 99.3%</div>
+      <div className="text-[8px] text-ink-200 mt-1">training · epoch 12</div>
     </div>
   );
 }

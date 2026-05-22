@@ -38,7 +38,7 @@ export function Projects() {
               terminal, rebuilt with foundation-model reasoning.
             </>
           }
-          description="Live market intelligence and transaction anomaly engines — 75k+ datapoints, LLM-driven analysis, automated retraining, sub-50ms inference."
+          description="Live market intelligence and transaction anomaly engines — LLM-driven analysis, automated retraining, real-time inference."
         />
 
         <div className="mt-16 md:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
@@ -186,29 +186,31 @@ function ProjectCard({
           />
         </div>
 
-        {/* Metrics */}
-        <div className="mt-6 grid grid-cols-3 gap-3">
-          {metrics.map((m) => (
-            <div
-              key={m.label}
-              className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-3"
-            >
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-display text-xl md:text-2xl font-light text-white">
-                  {m.value}
-                </span>
-                {m.trend ? (
-                  <span className="text-[10px] font-mono text-signal-green">
-                    {m.trend}
+        {/* Metrics — rendered only when validated numbers exist */}
+        {metrics.length > 0 ? (
+          <div className="mt-6 grid grid-cols-3 gap-3">
+            {metrics.map((m) => (
+              <div
+                key={m.label}
+                className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-3"
+              >
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-display text-xl md:text-2xl font-light text-white">
+                    {m.value}
                   </span>
-                ) : null}
+                  {m.trend ? (
+                    <span className="text-[10px] font-mono text-signal-green">
+                      {m.trend}
+                    </span>
+                  ) : null}
+                </div>
+                <div className="text-[10px] tracking-[0.18em] uppercase text-ink-300 mt-1">
+                  {m.label}
+                </div>
               </div>
-              <div className="text-[10px] tracking-[0.18em] uppercase text-ink-300 mt-1">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
 
         {/* Tags */}
         <div className="mt-6 flex flex-wrap gap-1.5">
@@ -233,8 +235,8 @@ function FraudCard() {
     <ProjectCard
       index="01"
       title="EDA Fraud Detector"
-      tagline="Real-time anomaly detection across millions of transactions."
-      description="A hybrid graph + temporal model that flags suspicious activity within milliseconds, with interactive heatmaps and rule-based overrides for analysts."
+      tagline="Real-time anomaly detection on streaming transaction graphs."
+      description="A hybrid graph + temporal model designed to flag suspicious activity in real time, with interactive heatmaps and rule-based overrides for analysts."
       tags={[
         "XGBoost",
         "Graph NN",
@@ -243,11 +245,7 @@ function FraudCard() {
         "Postgres",
         "Streamlit",
       ]}
-      metrics={[
-        { label: "AUC", value: "0.987", trend: "+0.04" },
-        { label: "Latency", value: "38ms" },
-        { label: "TPS", value: "12.8K" },
-      ]}
+      metrics={[]}
       Icon={ShieldAlert}
     >
       <FraudHeatmapVisual />
@@ -320,7 +318,7 @@ function StockCard() {
     <ProjectCard
       index="02"
       title="AI Quant Terminal"
-      tagline="LLM-grounded market intelligence across 75K+ datapoints."
+      tagline="LLM-grounded market intelligence with transformer forecasting."
       description="Transformer-based candlestick forecasting fused with news sentiment and fundamentals, surfaced through a live operator terminal with probability streams."
       tags={[
         "PyTorch",
@@ -330,11 +328,7 @@ function StockCard() {
         "FastAPI",
         "Plotly",
       ]}
-      metrics={[
-        { label: "Directional", value: "73.4%", trend: "+2.1" },
-        { label: "Sharpe", value: "1.92" },
-        { label: "Datapoints", value: "75K+" },
-      ]}
+      metrics={[]}
       Icon={LineChart}
     >
       <StockChartVisual />

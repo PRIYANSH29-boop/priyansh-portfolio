@@ -2,13 +2,7 @@
 
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import { useRef } from "react";
-import {
-  Radar,
-  Crosshair,
-  ShieldAlert,
-  Activity,
-  type LucideIcon,
-} from "lucide-react";
+import { Radar } from "lucide-react";
 
 const pipeline = [
   { name: "YOLO", sub: "v8 · detection" },
@@ -80,18 +74,6 @@ export function DroneSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="mt-10 grid grid-cols-3 gap-4 max-w-lg"
-            >
-              <Metric icon={Crosshair} value="96.59%" label="mAP@0.5" />
-              <Metric icon={ShieldAlert} value="99.50%" label="Classifier" />
-              <Metric icon={Activity} value="34 FPS" label="On-edge" />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.45 }}
               className="mt-8 flex flex-wrap gap-1.5"
             >
               {[
@@ -127,28 +109,6 @@ export function DroneSection() {
         />
       </div>
     </section>
-  );
-}
-
-function Metric({
-  icon: Icon,
-  value,
-  label,
-}: {
-  icon: LucideIcon;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3.5">
-      <Icon size={14} className="text-accent-soft" />
-      <div className="font-display text-xl md:text-2xl font-light text-white mt-2">
-        {value}
-      </div>
-      <div className="text-[9px] tracking-[0.2em] uppercase text-ink-300 mt-1">
-        {label}
-      </div>
-    </div>
   );
 }
 
@@ -244,7 +204,7 @@ function RadarVisual({ progress }: { progress: MotionValue<number> }) {
       </div>
       <div className="absolute bottom-3 left-3 right-3 flex justify-between text-[10px] font-mono tracking-widest text-ink-300">
         <span>LAT 28.5° N · LON 77.1° E</span>
-        <span>Δ 34fps · 6.4ms inf</span>
+        <span>Δ live · streaming</span>
       </div>
 
       {/* corner brackets */}
