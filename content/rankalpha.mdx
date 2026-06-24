@@ -1,0 +1,73 @@
+import { FeatureImportanceChart, DecileChart, ModelVsBaseline } from "@/components/RankAlphaCharts";
+
+<Section label="What it is">
+
+RankAlpha ranks the S&P 500 every month, trades the top and bottom of that ranking as a market-neutral book, and turns the result into a risk-managed, self-explaining portfolio. The key word is **ranking**: it doesn't predict prices, it predicts *relative order* — which stocks will outperform their peers — because that's the only thing the strategy actually uses.
+
+</Section>
+
+<Section label="The trap I escaped first">
+
+The first version did the obvious thing: predict a single stock's direction from its own technical features. It posted a **Sharpe of 0.72** — until I audited it. Most of that edge was **look-ahead leakage**: training labels that quietly peeked into the test window. After purging the leakage and charging realistic costs, accuracy fell to **~0.50 — a coin flip**.
+
+That dead end was the most useful result in the project. Single-stock direction is dominated by market-wide noise nobody can predict. The honest failure is what forced the real design.
+
+</Section>
+
+<Section label="The cross-sectional pivot">
+
+Instead of *"will this stock go up?"* the question became *"will it outperform the other 499?"*. You rank all the stocks each month, go long the top decile and short the bottom, and size the two legs equally so the market's move cancels out. What's left is the part that's actually about the individual stock — relative strength — which is where systematic equity edge tends to live.
+
+</Section>
+
+<Section label="The model">
+
+The ranker is **LightGBM with a learning-to-rank objective (LambdaMART)** — it optimises the *ordering* of stocks directly, not each stock's return. Seven price-based factors (momentum, volatility, size, reversal, liquidity), normalised cross-sectionally within each day. It's validated with **walk-forward retraining plus a 21-day embargo**, so no training label can overlap the test window — the same leakage discipline the first version failed.
+
+The bar it had to clear was a dumb baseline: plain 12-month momentum, no learning. It cleared it — modestly and honestly.
+
+<ModelVsBaseline />
+
+</Section>
+
+<Section label="What it actually learned — and a mistake I caught">
+
+Feature importance said volatility dominated, and I first wrote that up as "the model discovered the low-volatility anomaly." That was **wrong**, and checking the SHAP *direction* caught it: the long picks have *high* volatility with positive contribution — it tilts toward higher-vol names paired with momentum, the opposite of low-vol.
+
+The lesson is worth more than the result: **importance tells you which feature matters, never which direction.** You confirm the sign before you name the effect.
+
+<FeatureImportanceChart />
+
+</Section>
+
+<Section label="Does the ranking hold?">
+
+The real test isn't the headline Sharpe — it's whether stocks the model ranks high *actually* outperform. Sort by the model's score and look at what happened next month: the returns climb cleanly through the top deciles. The top decile is the strongest; the bottom (short) decile is the weak spot, so the edge leans long.
+
+<DecileChart />
+
+</Section>
+
+<Section label="From signal to portfolio">
+
+The score becomes an actual portfolio: long-only top picks, weighted inverse to volatility, capped per name, and scaled to a target volatility with the remainder held as cash. Every holding carries the factor reasons that put it there, and a local LLM turns those reasons into plain English — fed only the model's real numbers, so it explains rather than invents. It's framed throughout as an **educational simulation, never investment advice**, and it quotes no return probabilities.
+
+</Section>
+
+<Section label="Forward paper-trading">
+
+To test it honestly, I froze the model and traded it forward — no refitting with hindsight — for **23 months**. It returned **+19% annualised (Sharpe 1.25 vs 1.21** for an equal-weight benchmark), with realised volatility landing right on the 14% target, so the risk control is well-calibrated.
+
+<Caveat>
+Twenty-three months is **too short to be statistically meaningful** — a handful of months can move these numbers, and I won't claim a Sharpe on this little data. It's a live, growing track record, not a verdict.
+</Caveat>
+
+</Section>
+
+<Section label="Honest limitations">
+
+<Caveat>
+The universe uses **current** S&P 500 membership, which introduces **survivorship bias** (a point-in-time constituent list is the real fix). The research edge is **not statistically significant** (Rank IC t = 1.64 on 47 rebalances), the strategy is **untested through a momentum crash**, the short side isn't realistically costed (no borrow fees), and the alpha is **concentrated on the long leg**. This is a clean, leakage-controlled methodology demonstration — not a deployable, profitable system.
+</Caveat>
+
+</Section>

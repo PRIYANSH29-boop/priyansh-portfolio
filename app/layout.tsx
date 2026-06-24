@@ -1,37 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { sans, display } from "./fonts";
 import "./globals.css";
-import { SmoothScroll } from "@/components/SmoothScroll";
-import { CursorGlow } from "@/components/CursorGlow";
-import { AmbientBackground } from "@/components/AmbientBackground";
-import { BootSequence } from "@/components/BootSequence";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
+import { Navigation } from "@/components/Navigation";
+import { Footer } from "@/components/Footer";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Priyansh — AI/ML Engineer · Intelligent Systems",
-  description:
-    "Building intelligent systems. Machine learning, deep learning, LLMs, RAG, fraud detection, and stock intelligence research.",
-  metadataBase: new URL("https://example.com"),
+  metadataBase: new URL("https://priyansh-portfolioo.vercel.app"),
+  title: `${site.name} — ${site.role}`,
+  description: site.tagline,
   openGraph: {
-    title: "Priyansh — AI/ML Engineer",
-    description: "ML · DL · LLM · RAG · Quant Systems · AI Research",
+    title: `${site.name} — ${site.role}`,
+    description: site.tagline,
     type: "website",
   },
 };
@@ -42,17 +22,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${display.variable} ${mono.variable}`}
-    >
-      <body className="bg-ink-950 text-ink-100 antialiased cursor-glow-bg">
-        <BootSequence />
-        <AmbientBackground />
-        <CursorGlow />
-        <SmoothScroll>
-          <main className="relative z-10">{children}</main>
-        </SmoothScroll>
+    <html lang="en" className={`${sans.variable} ${display.variable}`}>
+      <body className="min-h-screen bg-paper text-ink antialiased">
+        <Navigation />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

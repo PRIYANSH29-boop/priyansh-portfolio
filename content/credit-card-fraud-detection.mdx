@@ -1,0 +1,60 @@
+<Section label="Problem">
+
+Credit-card fraud is rare and expensive. In the public Kaggle ULB dataset I used — **284,807 transactions, 492 of them fraud (0.17%)** — a model that predicts "never fraud" is 99.8% accurate and completely useless.
+
+That's the trap this project is really about. A headline **0.99 ROC-AUC** sounds excellent, but at 0.17% prevalence it tells you almost nothing about whether the model is catching fraud or just exploiting the imbalance.
+
+</Section>
+
+<Section label="Pricing the errors">
+
+So I stopped scoring the model on accuracy and started pricing its errors in **pounds**. Every missed fraud and every false alarm carries a cost, and the right decision threshold is the one that minimises total £ cost — not the default 0.5.
+
+Tuning the threshold beat the default: roughly **£2,610 of cost at the tuned threshold versus £2,775 at 0.5**. A real improvement — but a modest one, which set up the more important question.
+
+</Section>
+
+<Section label="Where it breaks">
+
+Auditing the errors showed a clear pattern: the model **catches small frauds and misses big ones**. The worst case was a **£2,125 fraudulent transaction that scored 0.000008** — the model was essentially certain it was legitimate.
+
+That's the failure that matters most. The cheap frauds it catches barely move the cost; the rare, expensive ones it misses are where the money actually is.
+
+</Section>
+
+<Section label="Is it the algorithm?">
+
+The obvious next move is cost-sensitive training — tell the model that missing a big fraud is expensive. I did, and on that £2,125 transaction the score moved from **0.000008 to 0.000064**: an order of magnitude, and still essentially zero.
+
+When throwing cost weights at the model barely changes its mind, the bottleneck probably isn't the algorithm.
+
+</Section>
+
+<Section label="Proving it's the data">
+
+My hypothesis: the ceiling is the **data**, not the model. The Kaggle features are anonymised PCA components with no notion of how large a transaction is relative to a customer's own history — exactly the signal you'd need to flag a high-value fraud.
+
+To test that, I re-ran the **same pipeline** on the richer Sparkov dataset, adding an `amt_ratio` feature (transaction amount relative to the cardholder's norm). **PR-AUC went from 0.79 to 0.90, and the catch rate on high-value frauds went from roughly 0% to 99.8%.**
+
+<Caveat>
+Sparkov is a **synthetic** dataset, so this is a conceptual proof, not a controlled experiment on the original data. It shows the *kind* of feature that lifts high-value recall — it doesn't prove those exact numbers would hold on real production data.
+</Caveat>
+
+</Section>
+
+<Section label="Engineering decisions">
+
+- **Temporal split, not random** — train on earlier transactions, test on later ones, so there's no leakage from future to past.
+- **Logistic-regression baseline before XGBoost** — the baseline sets an honest bar. XGBoost won, but by only about **0.03 PR-AUC**, which is worth knowing before reaching for the heavier model.
+- **Class weights, not SMOTE** — reweighting avoids synthesising fraud rows that can leak optimism into validation.
+- **SHAP for explanations** — each flagged transaction comes with the features that drove its score.
+
+</Section>
+
+<Section label="Limitations">
+
+<Caveat>
+The test fold contains only **75 frauds**, so the error metrics are noisy — a handful of transactions can move the numbers. And the original features (**V1–V28**) are anonymised PCA components, which limits how far feature engineering can go on that dataset.
+</Caveat>
+
+</Section>

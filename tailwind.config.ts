@@ -1,5 +1,10 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * Lean, editorial design system.
+ * - Near-black background, graphite neutral ramp, ONE subtle accent.
+ * - Restrained type scale. No mesh gradients, noise, or decorative animation.
+ */
 const config: Config = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -8,91 +13,48 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Warm editorial "paper" palette.
+        paper: "#F5EFE6", // page background
+        surface: "#FFFFFF", // card surface
+        wash: "#ECE3D6", // faint inset (code blocks, placeholders)
+        line: "rgba(74,55,40,0.14)", // hairline borders
         ink: {
-          950: "#050507",
-          900: "#0a0a0d",
-          800: "#101015",
-          700: "#16161d",
-          600: "#1d1d27",
-          500: "#26262f",
-          400: "#3a3a45",
-          300: "#5a5a68",
-          200: "#a0a0b0",
-          100: "#dcdce4",
+          DEFAULT: "#2E2622", // primary text
+          muted: "#6B5D52", // secondary text
+          faint: "#8A7A6C", // labels / tertiary
         },
-        accent: {
-          DEFAULT: "#5b8cff",
-          electric: "#3d7bff",
-          glow: "#7ba6ff",
-          deep: "#1e3a8a",
-          soft: "#a8c0ff",
-        },
-        signal: {
-          green: "#3effc4",
-          red: "#ff4d6d",
-          amber: "#ffb84d",
-        },
+        // Brown is INK, not fill. The single accent: terracotta — links, focus
+        // rings, featured card border. Used sparingly.
+        accent: "#9A5B33",
+        // Primary button fill (dark roast brown).
+        espresso: "#4A372A",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
         display: ["var(--font-display)", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        mono: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
       },
       fontSize: {
-        "display-xl": ["clamp(3.5rem, 9vw, 8.5rem)", { lineHeight: "0.95", letterSpacing: "-0.04em" }],
-        "display-lg": ["clamp(2.5rem, 6.5vw, 6rem)", { lineHeight: "0.98", letterSpacing: "-0.035em" }],
-        "display-md": ["clamp(2rem, 4.5vw, 4rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        "display-xl": ["clamp(2.75rem, 5.5vw, 4.5rem)", { lineHeight: "1.0", letterSpacing: "-0.025em" }],
+        "display-lg": ["clamp(2rem, 4vw, 3.25rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
+        "display-md": ["clamp(1.5rem, 2.6vw, 2.25rem)", { lineHeight: "1.12", letterSpacing: "-0.015em" }],
+        "overline": ["0.75rem", { lineHeight: "1", letterSpacing: "0.18em" }],
       },
-      backgroundImage: {
-        "mesh-radial":
-          "radial-gradient(at 20% 10%, rgba(91,140,255,0.18) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(62,255,196,0.08) 0px, transparent 50%), radial-gradient(at 50% 100%, rgba(91,140,255,0.12) 0px, transparent 50%)",
-        "grid-fade":
-          "linear-gradient(to bottom, transparent, rgba(5,5,7,0.85) 70%, #050507)",
-        "noise":
-          "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E\")",
+      maxWidth: {
+        shell: "72rem", // page content width
+        prose: "65ch", // readable measure for project writeups
       },
-      animation: {
-        "float-slow": "float 8s ease-in-out infinite",
-        "float-medium": "float 6s ease-in-out infinite",
-        "pulse-glow": "pulseGlow 3s ease-in-out infinite",
-        "shimmer": "shimmer 2.5s linear infinite",
-        "orbit": "orbit 20s linear infinite",
-        "scan": "scan 4s ease-in-out infinite",
-        "ping-slow": "pingSlow 2.6s cubic-bezier(0,0,0.2,1) infinite",
-        "draw": "draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards",
+      spacing: {
+        section: "6rem",
+        "section-lg": "9rem",
       },
-      keyframes: {
-        float: {
-          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "50%": { transform: "translateY(-12px) rotate(0.5deg)" },
-        },
-        pulseGlow: {
-          "0%, 100%": { opacity: "0.6", filter: "blur(20px)" },
-          "50%": { opacity: "1", filter: "blur(30px)" },
-        },
-        shimmer: {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
-        orbit: {
-          "0%": { transform: "rotate(0deg) translateX(40px) rotate(0deg)" },
-          "100%": { transform: "rotate(360deg) translateX(40px) rotate(-360deg)" },
-        },
-        scan: {
-          "0%, 100%": { transform: "translateY(0%)" },
-          "50%": { transform: "translateY(100%)" },
-        },
-        pingSlow: {
-          "0%": { transform: "scale(1)", opacity: "0.8" },
-          "75%, 100%": { transform: "scale(2.4)", opacity: "0" },
-        },
-        draw: {
-          "0%": { strokeDashoffset: "var(--dash, 1000)" },
-          "100%": { strokeDashoffset: "0" },
-        },
+      borderColor: {
+        DEFAULT: "rgba(74,55,40,0.14)",
       },
-      backdropBlur: {
-        xs: "2px",
+      boxShadow: {
+        // Warm, low shadows — brown-tinted, never black.
+        card: "0 1px 2px rgba(74,55,40,0.05), 0 10px 24px -14px rgba(74,55,40,0.20)",
+        lift: "0 1px 2px rgba(74,55,40,0.05), 0 22px 40px -18px rgba(74,55,40,0.28)",
       },
     },
   },

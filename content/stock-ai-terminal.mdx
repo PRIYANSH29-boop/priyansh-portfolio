@@ -1,0 +1,48 @@
+<Section label="What it is">
+
+StockAI Terminal is an **end-to-end ML + LLM prototype** for stock analysis. I want to be precise about that word: it's a well-engineered prototype, not a production system. The value is in the **explainability and the grounded LLM layer**, not in the raw prediction accuracy.
+
+</Section>
+
+<Section label="The model">
+
+The signal model is **AdaBoost**, evaluated with **walk-forward validation** — train on the past, test on the next window, roll forward — across **31 stocks, 4 sectors, ~10 years, and roughly 74,000 datapoints**.
+
+Accuracy lands around **57%**. I'm stating that plainly because it's the honest number: a few points above a coin flip on a genuinely hard problem. The point of the project isn't to beat the market — it's to make the model's reasoning legible.
+
+</Section>
+
+<Section label="What the model learned">
+
+The feature importances are the interesting part:
+
+- **Volatility — 41.7%**
+- **PE ratio — 17.7%**
+- **MACD histogram — 16.9%**
+- **RSI — roughly 0%**
+
+Volatility dominates, while the much-loved RSI contributes essentially nothing. Surfacing that kind of finding is exactly what the explainability layer is for.
+
+</Section>
+
+<Section label="The LLM layer">
+
+A **Llama 3.3 70B** model, served via **Groq**, turns the model output into a readable analysis. Crucially, it's fed the **structured model output** — the predictions and feature importances — so it **cites those numbers rather than hallucinating** its own.
+
+It **never gives buy or sell advice.** It explains what the model saw and why, and stops there.
+
+</Section>
+
+<Section label="Automation">
+
+The model **retrains weekly via GitHub Actions**, so the terminal stays current without manual intervention.
+
+</Section>
+
+<Section label="Honest limitations">
+
+<Caveat>
+**AdaBoost hasn't yet been benchmarked against XGBoost** — so I can't claim it's the best choice, only the current one. And **SHAP on individual predictions is planned, not done**: today's explanations are global feature importances, not per-prediction attributions.
+</Caveat>
+
+</Section>
