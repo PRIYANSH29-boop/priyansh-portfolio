@@ -3,6 +3,7 @@ import { sans, display } from "./fonts";
 import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { NeuralBackground } from "@/components/NeuralBackground";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
       <body className="min-h-screen bg-paper text-ink antialiased">
+        <NeuralBackground />
         <Navigation />
         <main>{children}</main>
         <Footer />

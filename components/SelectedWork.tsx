@@ -48,9 +48,9 @@ function WorkCard({ project }: { project: Project }) {
           />
         ) : null}
 
-        {/* Static screenshot slot — never an iframe (Streamlit apps sleep + block framing). */}
-        <div className="relative aspect-[16/9] w-full border-b border-line bg-wash">
-          {project.screenshot ? (
+        {/* Static screenshot slot — only shown when a real screenshot exists. */}
+        {project.screenshot ? (
+          <div className="relative aspect-[16/9] w-full border-b border-line bg-wash">
             <Image
               src={project.screenshot}
               alt={project.screenshotAlt ?? `${project.name} screenshot`}
@@ -58,12 +58,8 @@ function WorkCard({ project }: { project: Project }) {
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 1100px"
             />
-          ) : (
-            <div className="grid h-full place-items-center text-xs text-ink-faint">
-              Screenshot — to be added
-            </div>
-          )}
-        </div>
+          </div>
+        ) : null}
 
         <div className="p-6 md:p-8">
           <div className="flex items-start justify-between gap-4">
