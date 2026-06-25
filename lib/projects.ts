@@ -32,7 +32,7 @@ export const projects: Project[] = [
     tagline:
       "A cross-sectional equity ranker: it learns to order S&P 500 stocks, turns the ranking into a risk-managed, self-explaining portfolio, and proves it with a leakage-controlled, cost-aware backtest — honest about a modest, not-yet-significant edge.",
     status: "in-progress",
-    liveUrl: null,
+    liveUrl: "https://financeai-tqrpxdxbsnqcfvrtko5one.streamlit.app/",
     repoUrl: "https://github.com/PRIYANSH29-boop/financeai",
     tags: [
       "Python",
