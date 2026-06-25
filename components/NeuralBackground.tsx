@@ -71,7 +71,7 @@ export function NeuralBackground() {
           const b = nodes[j];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
           if (d < LINK) {
-            ctx.strokeStyle = `rgba(154,91,51,${0.12 * (1 - d / LINK)})`;
+            ctx.strokeStyle = `rgba(154,91,51,${0.28 * (1 - d / LINK)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -82,9 +82,9 @@ export function NeuralBackground() {
       }
       // nodes
       for (const n of nodes) {
-        ctx.fillStyle = "rgba(74,55,40,0.28)";
+        ctx.fillStyle = "rgba(74,55,40,0.55)";
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 1.5, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, 1.8, 0, Math.PI * 2);
         ctx.fill();
       }
       // floating ML symbols
@@ -92,7 +92,7 @@ export function NeuralBackground() {
       ctx.textBaseline = "middle";
       for (const g of glyphs) {
         ctx.font = `italic ${g.size}px Georgia, 'Times New Roman', serif`;
-        ctx.fillStyle = "rgba(74,55,40,0.12)";
+        ctx.fillStyle = "rgba(74,55,40,0.26)";
         ctx.fillText(g.ch, g.x, g.y);
       }
     };
@@ -137,7 +137,7 @@ export function NeuralBackground() {
     <canvas
       ref={ref}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-70"
+      className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-100"
     />
   );
 }
