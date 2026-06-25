@@ -15,7 +15,7 @@ export function SelectedWork() {
       <SectionHeader
         eyebrow="Selected work"
         title="What I'm building"
-        description="Machine-learning systems for finance, documented end to end — the problem, the approach, the tradeoffs, and honest results, including where they fall short."
+        description="Machine-learning systems across finance and computer vision, documented end to end — the problem, the approach, the tradeoffs, and honest results, including where they fall short."
       />
 
       <div className="mt-10 grid gap-6">

@@ -1,0 +1,49 @@
+<Section label="What it is">
+
+A real-time anti-UAV (drone) surveillance system **and** the research paper that evaluates it honestly. The headline isn't "we built a detector" — it's *"we measured what actually survives when the data changes."* Co-authored with Rawad Hammad at the University of East London, written up as an IEEE-format manuscript.
+
+</Section>
+
+<Section label="The system">
+
+A three-stage cascade: a **YOLO11s detector** finds candidates, a **ResNet-18 verifier** rejects birds, and an **EfficientNet-B0 classifier** names the drone type. On top sits a Streamlit surveillance app — image and RTSP/IP-camera modes, restricted-zone alerts, multi-drone tracking, and an alert database.
+
+</Section>
+
+<Section label="The honest question">
+
+In-distribution, every stage looks almost solved: **0.97 mAP@0.5** detection, **~100%** bird suppression, **99.7%** balanced classification accuracy. That's exactly the kind of near-saturated number that should make you suspicious. The paper asks the only question that matters for a real deployment: **do those scores hold on data the models have never seen?**
+
+</Section>
+
+<Section label="The finding — failure is not uniform">
+
+They don't hold — but they fail in *different* ways, and that structure is the contribution:
+
+- **The classifier generalises** — 92–99% on out-of-distribution drone types.
+- **The detector loses about half its mAP** — 0.97 → **0.52** cross-domain, replicated on a second benchmark (0.55), and the drop tracks target *size*.
+- **The verifier collapses** — from ~100% bird suppression to **~26%** on novel bird species it was never trained on.
+
+So the weakest link isn't where the in-distribution scores suggest. A system that looks uniformly excellent is, under domain shift, only as trustworthy as its most brittle stage.
+
+</Section>
+
+<Section label="The rigor — a leakage audit that changed the result">
+
+Before trusting any of it, I ran a **perceptual-hash (pHash) leakage audit** to catch near-duplicate images bleeding across the train/test split — and it *materially changed* the numbers. Everything downstream is reported behind that audit, multi-seeded (3 seeds), with frozen split manifests and a fixed zero-shot evaluation convention so the cross-domain results are reproducible rather than cherry-picked.
+
+</Section>
+
+<Section label="Honest limitations">
+
+<Caveat>
+This is a **methodology and evaluation** contribution, not a deployable detector. The cross-domain results are zero-shot and bounded by the benchmarks used; the verifier's collapse is measured on specific novel-species sets, and absolute numbers depend on the eval convention. Datasets and trained weights are too large for the repo and are archived separately (Zenodo DOI to be minted at submission). **No live demo** — the weights aren't public — so this one is theory and evidence, not a clickable app.
+</Caveat>
+
+</Section>
+
+<Section label="Why it's here">
+
+Different domain from my finance work — computer vision, not markets — but the same instinct runs through it: distrust a number that looks too good, find where the system actually breaks, and report it plainly. The paper source and evaluation code are on GitHub.
+
+</Section>

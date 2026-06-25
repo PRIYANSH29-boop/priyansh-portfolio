@@ -1,6 +1,6 @@
 import { resolveMetrics, type Metric } from "@/lib/metrics";
 
-export type ProjectStatus = "in-progress" | "live";
+export type ProjectStatus = "in-progress" | "live" | "research";
 
 export type Project = {
   slug: string;
@@ -21,6 +21,7 @@ export type Project = {
 export const STATUS_LABEL: Record<ProjectStatus, string> = {
   "in-progress": "In progress",
   live: "Live",
+  research: "Research",
 };
 
 // SINGLE SOURCE OF TRUTH. Add a project = one object here + one content/<slug>.mdx
@@ -76,6 +77,25 @@ export const projects: Project[] = [
       { key: "walkForwardFolds", label: "Walk-forward folds" },
       { key: "directionalAccuracy", label: "Directional accuracy" },
     ]),
+  },
+  {
+    slug: "anti-uav-cross-domain",
+    name: "Anti-UAV Detection",
+    tagline:
+      "A cascaded drone-detection system (detector → bird-verifier → type-classifier) and an IEEE paper that measures, honestly, what survives domain shift — near-perfect in-distribution scores that partly collapse on unseen data, behind a perceptual-hash leakage audit.",
+    status: "research",
+    liveUrl: null,
+    repoUrl: "https://github.com/PRIYANSH29-boop/anti-uav-cross-domain",
+    tags: [
+      "Computer vision",
+      "YOLO11",
+      "ResNet-18",
+      "EfficientNet-B0",
+      "Cross-domain eval",
+      "IEEE paper",
+    ],
+    featured: false,
+    metrics: [],
   },
 ];
 
