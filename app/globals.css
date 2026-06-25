@@ -22,7 +22,7 @@
   }
 
   body {
-    background-color: var(--bg);
+    /* background lives on <html> so the fixed -z-10 canvas isn't covered */
     color: var(--fg);
     font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
     font-feature-settings: "cv02", "cv11";

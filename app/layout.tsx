@@ -24,7 +24,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body className="min-h-screen bg-paper text-ink antialiased">
+      <body className="min-h-screen text-ink antialiased">
         <NeuralBackground />
         <Navigation />
         <main>{children}</main>
