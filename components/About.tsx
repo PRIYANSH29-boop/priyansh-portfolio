@@ -8,7 +8,8 @@ export function About() {
 
         <div className="mt-6 max-w-prose space-y-4 text-lg leading-relaxed text-ink">
           <p>
-            I&apos;m {site.name}, a junior ML engineer based in {site.location}.
+            I&apos;m {site.name}, a First-Class Computer Science graduate and junior
+            ML engineer based in {site.location}.
             I&apos;m focused on machine learning for finance — fraud, risk, and the
             unglamorous data work that makes a model trustworthy in production.
           </p>
