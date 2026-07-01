@@ -7,7 +7,7 @@ import { NeuralBackground } from "@/components/NeuralBackground";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://priyansh-portfolioo.vercel.app"),
+  metadataBase: new URL("https://portfolio-dun-two-93.vercel.app"),
   title: `${site.name} — ${site.role}`,
   description: site.tagline,
   openGraph: {
